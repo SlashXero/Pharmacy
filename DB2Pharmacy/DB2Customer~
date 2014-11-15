@@ -1,8 +1,6 @@
 #!/bin/ksh
 #DB2 Pharmacy - Customer Script
 
-db2 connect to db2data > /dev/null
- 
 SELECTION=-1
 # Will print infinitely until the user enters 0 to exit the previous Script.
 while [ $SELECTION -ne 0 ]
@@ -17,8 +15,7 @@ do
 	echo "5 | Query 5"
 	echo "0 | RETURN TO MAIN MENU"
 	echo "----------------------------"
-	echo "Please enter the number corresponding to the selection above: " 
-	read SELECTION
+	read -p "Please enter the number corresponding to the selection above: " SELECTION
 
 	#Select and run user queries
 	case $SELECTION in

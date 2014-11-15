@@ -10,7 +10,7 @@ db2 "INSERT INTO PRODUCT VALUES (3, 'Vicks Nyquil Base Cough/Cold Cherry', '0561
 db2 "INSERT INTO PRODUCT VALUES (4, 'SEROQUEL XR (QUETEAPINA)30TAB 300MG', '7501098605229', 'Drugs', 1, 126.65, 2)"
 db2 "INSERT INTO PRODUCT VALUES (5, 'Plan B Emergency Contraception 2 Tablets', '628791051713', 'Sexual Wellbeing', 1, 44.49, 4)"
 db2 "INSERT INTO PRODUCT VALUES (6, 'Durex Maximum 12 Condoms', '067981100907', 'Sexual Wellbeing', 0, 19.49, 12)"
-db2 "INSERT INTO PRODUCT VALUES (7, 'Iron Kids Gummies Omega-3s for Smart Kids 60 Gummies', '683702100072', 'Vitamins and Supplements', 0, 9.99, 0)"
+db2 "INSERT INTO PRODUCT VALUES (7, 'Iron Kids Gummies Omega-3's for Smart Kids 60 Gummies', '683702100072', 'Vitamins and Supplements', 0, 9.99, 0)"
 db2 "INSERT INTO PRODUCT VALUES (8, 'Lithium Carbonate - 250mg (100 Capsules)', '20080403191042', 'Drugs', 1, 12.30, 7)"
 db2 "INSERT INTO PRODUCT VALUES (9, 'Sunny D Citrus Drink', '050200560002', 'Groceries', 0, 3.99, 22)"
 
@@ -21,7 +21,7 @@ db2 "INSERT INTO SALE VALUES (2, '2014-11-14-13.05.23.00', 'Craig')"
 db2 "INSERT INTO SALE VALUES (3, '2014-11-14-15.22.23.00', 'Faheed')"
 
 #Prescription Table
-db2 "INSERT INTO PRESCRIPTION VALUES (1, 'John', 'House', '2014-11-13-12.00.23.00', '2014-11-14-15.22.23.00', 1)"
+db2 "INSERT INTO PRESCRIPTION VALUES (1, 'John', 'House', '2014-11-13-12.00.23.00', 2014-11-14-15.22.23.00, 1)"
 db2 "INSERT INTO PRESCRIPTION VALUES (2, 'Mary', 'Chase', '2014-11-13-12.00.23.00', Null, 0)"
 
 #SalesProduct Table

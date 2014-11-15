@@ -1,17 +1,8 @@
 #!/bin/ksh
 #DB2 Pharmacy - Main Menu
 
-db2 connect to db2data > /dev/null
-
 # Create Tables
-echo "[DB2] Creating Tables..."
-./DB2Create >> log.txt
-echo "[DB2] Creating Tables: DONE"
-
-# Create Tables
-echo "[DB2] Populating Tables..."
-./DB2Populate >> log.txt
-echo "[DB2] Polulating Tables: DONE"
+# INSERT TABLE CREATION SCRIPT HERE!!!
 
 SELECTION=-1
 # Will print infinitely until the user enters 0 to exit the program.
@@ -25,7 +16,6 @@ do
 	echo "3 | Cashiers"
 	echo "4 | Customers"
 	echo "5 | TRANSACTIONS"
-	echo "6 | SHOW TABLES"
 	echo "0 | EXIT DATABASE"
 	echo "----------------------------"
 	echo "Please enter the number corresponding to the selection above: " 
@@ -53,10 +43,6 @@ do
 			#Database Trasation Table 
 			
 			;;
-		6)
-			#Database Trasation Table 
-			db2 "LIST TABLES"
-			;;
 		0)
 			#Check if user wants to exit
 			echo "Are you sure you want to exit?"
@@ -80,12 +66,4 @@ do
 done
 
 #Drop Tables
-echo "[DB2] Dropping Tables..."
-./DB2Drop >> log.txt
-echo "[DB2] Dropping Tables: Done"
-echo "[DB2] Removing and exiting."
-
-sleep 1
-
-#Remove all scripts from turing
-rm -f ./\DB2*
+#INSERT DROP TABLES SCRIPT HERE!!!

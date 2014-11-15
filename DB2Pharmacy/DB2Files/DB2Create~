@@ -46,10 +46,10 @@ db2 "CREATE TABLE SaleProduct(
 )"
 
 db2 "CREATE TABLE PrescriptionProduct(
-	ID integer NOT NULL,
-	PrescriptionID integer NOT NULL,
-	ProductID integer NOT NULL,
-	Quantity integer NOT NULL,
-	PRIMARY KEY(ID)
+ID integer NOT NULL,
+PrescriptionID integer NOT NULL,
+ProductID integer NOT NULL,
+Quantity integer NOT NULL,
+PRIMARY KEY(ID)
 )"
 echo "[DB2] Creating Tables: Done"

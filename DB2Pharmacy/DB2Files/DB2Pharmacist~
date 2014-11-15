@@ -1,15 +1,15 @@
 #!/bin/ksh
-#DB2 Pharmacy - Customer Script
+#DB2 Pharmacy - Pharmacist Script
 
-db2 connect to db2data > /dev/null
- 
+db2 connect to db2data
+
 SELECTION=-1
 # Will print infinitely until the user enters 0 to exit the previous Script.
 while [ $SELECTION -ne 0 ]
 do
 	SELECTION=-1
-	#Print Customer Menu
-	echo "----<CUSTOMER MENU>----"
+	#Print Pharmacist Menu
+	echo "----<PHARMACIST MENU>----"
 	echo "1 | Query 1"
 	echo "2 | Query 2"
 	echo "3 | Query 3"
