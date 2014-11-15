@@ -1,0 +1,51 @@
+#!/bin/bash
+db2 connect to db2data
+
+db2 "CREATE TABLE Product
+(
+ID integer NOT NULL,
+Name varchar(25) NOT NULL,
+SKU varchar(25) NOT NULL,
+Department varchar(25),
+IsPrescription integer,
+Price double NOT NULL,
+Stock integer NOT NULL,
+PRIMARY KEY(ID)
+)"
+
+db2 "CREATE TABLE Sale
+(
+ID integer NOT NULL,
+Timestamp timestamp NOT NULL,
+Employee varchar(25) NOT NULL,
+PRIMARY KEY(ID)
+)"
+
+db2 "CREATE TABLE Prescription
+(
+ID integer NOT NULL,
+Customer varchar(25) NOT NULL,
+Doctor varchar(25) NOT NULL,
+DateOrdered timestamp NOT NULL,
+DateDelivered timestamp,
+isFilled integer NOT NULL,
+PRIMARY KEY(ID)
+)"
+
+db2 "CREATE TABLE SaleProduct
+(
+ID integer NOT NULL,
+SaleID integer NOT NULL,
+ProductID integer NOT NULL,
+Quantity integer NOT NULL,
+PRIMARY KEY(ID)
+)"
+
+db2 "CREATE TABLE PrescriptionProduct
+(
+ID integer NOT NULL,
+PrescriptionID integer NOT NULL,
+ProductID integer NOT NULL,
+Quantity integer NOT NULL,
+PRIMARY KEY(ID)
+)"
