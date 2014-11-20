@@ -2,7 +2,8 @@
 
 db2 connect to db2data > /dev/null
 
-echo "[DB2] Drop Tables..."
+#drop tables
+echo "[DB2] Drop Tables:..."
 db2 "DROP TABLE Product"
 db2 "DROP TABLE Sale"
 db2 "DROP TABLE Prescription"

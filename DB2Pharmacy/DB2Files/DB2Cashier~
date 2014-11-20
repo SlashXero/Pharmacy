@@ -11,7 +11,7 @@ do
 	#Print Cashier Menu
 	echo "----<CASHIER MENU>----"
 	echo "1 | Price of a product"
-	echo "2 | Query 2"
+	echo "2 | Record sale"
 	echo "3 | Query 3"
 	echo "4 | Query 4"
 	echo "5 | Query 5"
@@ -24,18 +24,24 @@ do
 	case $SELECTION in
 		1)
 			#Price of product
-			echo "Enter the Product ID:"
-			read ID 
-			db2 "SELECT Name, SKU FROM Product WHERE SKU = $ID"
+			echo "Enter the Product SKU:"
+			read SKU
+			echo ">$SKU<"
+			db2 "SELECT price FROM product WHERE sku = '$SKU'"
 			;;
 		2)
-			#Query 2
-			
+			#Record Sale
+			echo "Enter the Product SKU:"
+			read SKU
+			prod_id="$(db2 -x -n "SELECT price FROM product WHERE sku = '$SKU'")" | tr -d ' '
+			echo "+$prod_id+"
+			db2 "UPDATE product SET stock = stock - 1 WHERE id = $prod_id AND stock > 0"
+			db2 "INSERT INTO SaleProduct VALUES (seq_saleprod, )"
 			;;
 		3)
 			#Query 3
 			
-			;;
+			;; 
 		4)
 			#Query 4
 

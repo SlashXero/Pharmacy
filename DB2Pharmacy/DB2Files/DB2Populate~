@@ -3,40 +3,45 @@
 db2 connect to db2data > /dev/null
 
 echo "[DB2] Populating Tables..."
-#Product Table
-db2 "INSERT INTO PRODUCT VALUES (1, 'Head & Shoulders Men Refresh Dandruff Shampoo 700 ml', '037000141303', 'Personal Care', 0, 12.99, 7)"
-db2 "INSERT INTO PRODUCT VALUES (2, 'Tylenol Childrens Acetaminophen Suspension Usp Cherry 100 ml', '064541319809', 'Everyday Medicines and First Aid', 0, 6.96, 3)"
-db2 "INSERT INTO PRODUCT VALUES (3, 'Vicks Nyquil Base Cough/Cold Cherry', '056100074816', 'Everyday Medicines and First Aid', 0, 9.99, 6)"
-db2 "INSERT INTO PRODUCT VALUES (4, 'SEROQUEL XR (QUETEAPINA)30TAB 300MG', '7501098605229', 'Drugs', 1, 126.65, 2)"
-db2 "INSERT INTO PRODUCT VALUES (5, 'Plan B Emergency Contraception 2 Tablets', '628791051713', 'Sexual Wellbeing', 1, 44.49, 4)"
-db2 "INSERT INTO PRODUCT VALUES (6, 'Durex Maximum 12 Condoms', '067981100907', 'Sexual Wellbeing', 0, 19.49, 12)"
-db2 "INSERT INTO PRODUCT VALUES (7, 'Iron Kids Gummies Omega-3's for Smart Kids 60 Gummies', '683702100072', 'Vitamins and Supplements', 0, 9.99, 0)"
-db2 "INSERT INTO PRODUCT VALUES (8, 'Lithium Carbonate - 250mg (100 Capsules)', '20080403191042', 'Drugs', 1, 12.30, 7)"
-db2 "INSERT INTO PRODUCT VALUES (9, 'Sunny D Citrus Drink', '050200560002', 'Groceries', 0, 3.99, 22)"
 
+#Product Table
+echo "Populating Tables... Product"
+db2 "INSERT INTO PRODUCT VALUES ('037000141303', 'Head & Shoulders Men Refresh Dandruff Shampoo 700 ml', 'Personal Care', 0, 12.99, 7)"
+db2 "INSERT INTO PRODUCT VALUES ('064541319809', 'Tylenol Childrens Acetaminophen Suspension Usp Cherry 100 ml', 'Everyday Medicines and First Aid', 0, 6.96, 3)"
+db2 "INSERT INTO PRODUCT VALUES ('056100074816', 'Vicks Nyquil Base Cough/Cold Cherry', 'Everyday Medicines and First Aid', 0, 9.99, 6)"
+db2 "INSERT INTO PRODUCT VALUES ('7501098605229', 'SEROQUEL XR (QUETEAPINA)30TAB 300MG', 'Drugs', 1, 126.65, 2)"
+db2 "INSERT INTO PRODUCT VALUES ('628791051713', 'Plan B Emergency Contraception 2 Tablets', 'Sexual Wellbeing', 1, 44.49, 4)"
+db2 "INSERT INTO PRODUCT VALUES ('067981100907', 'Durex Maximum 12 Condoms', 'Sexual Wellbeing', 0, 19.49, 12)"
+db2 "INSERT INTO PRODUCT VALUES ('683702100072', 'Iron Kids Gummies Omega-3s for Smart Kids 60 Gummies', 'Vitamins and Supplements', 0, 9.99, 0)"
+db2 "INSERT INTO PRODUCT VALUES ('20080403191042', 'Lithium Carbonate - 250mg (100 Capsules)' , 'Drugs', 1, 12.30, 7)"
+db2 "INSERT INTO PRODUCT VALUES ('050200560002', 'Sunny D Citrus Drink', 'Groceries', 0, 3.99, 22)"
 
 #Sales Table
-db2 "INSERT INTO SALE VALUES (1, '2014-11-14-12.12.23.00', 'Debra')"
-db2 "INSERT INTO SALE VALUES (2, '2014-11-14-13.05.23.00', 'Craig')"
-db2 "INSERT INTO SALE VALUES (3, '2014-11-14-15.22.23.00', 'Faheed')"
+echo "Populating Tables... Sales"
+db2 "INSERT INTO SALE (Timestamp, Name) VALUES ('2014-11-14-12.12.23.00', 'Debra')"
+db2 "INSERT INTO SALE (Timestamp, Name) VALUES ('2014-11-14-13.05.23.00', 'Craig')"
+db2 "INSERT INTO SALE (Timestamp, Name) VALUES ('2014-11-14-15.22.23.00', 'Faheed')"
 
 #Prescription Table
-db2 "INSERT INTO PRESCRIPTION VALUES (1, 'John', 'House', '2014-11-13-12.00.23.00', 2014-11-14-15.22.23.00, 1)"
-db2 "INSERT INTO PRESCRIPTION VALUES (2, 'Mary', 'Chase', '2014-11-13-12.00.23.00', Null, 0)"
+echo "Populating Tables... Prescription"
+db2 "INSERT INTO PRESCRIPTION (Customer, Doctor, DateOrdered, DateDelivered, IsFulfilled) VALUES ('John', 'House', '2014-11-13-12.00.23.00', '2014-11-14-15.22.23.00', 1)"
+db2 "INSERT INTO PRESCRIPTION (Customer, Doctor, DateOrdered, DateDelivered, IsFulfilled) VALUES ('Mary', 'Chase', '2014-11-13-12.00.23.00', Null, 0)"
 
 #SalesProduct Table
-db2 "INSERT INTO SALEPRODUCT VALUES (1,1,1,2)"
-db2 "INSERT INTO SALEPRODUCT VALUES (2,1,6,3)"
-db2 "INSERT INTO SALEPRODUCT VALUES (3,2,2,1)"
-db2 "INSERT INTO SALEPRODUCT VALUES (4,2,3,1)"
-db2 "INSERT INTO SALEPRODUCT VALUES (5,2,7,1)"
-db2 "INSERT INTO SALEPRODUCT VALUES (6,2,9,8)"
-db2 "INSERT INTO SALEPRODUCT VALUES (7,3,4,1)"
-db2 "INSERT INTO SALEPRODUCT VALUES (8,3,8,1)"
+echo "Populating Tables... SalesProduct"
+db2 "INSERT INTO SALEPRODUCT (SaleID, ProductSKU, Quantity) VALUES (1,'037000141303',2)"
+db2 "INSERT INTO SALEPRODUCT (SaleID, ProductSKU, Quantity) VALUES (1,'067981100907',3)"
+db2 "INSERT INTO SALEPRODUCT (SaleID, ProductSKU, Quantity) VALUES (2,'064541319809',1)"
+db2 "INSERT INTO SALEPRODUCT (SaleID, ProductSKU, Quantity) VALUES (2,'056100074816',1)"
+db2 "INSERT INTO SALEPRODUCT (SaleID, ProductSKU, Quantity) VALUES (2,'683702100072',1)"
+db2 "INSERT INTO SALEPRODUCT (SaleID, ProductSKU, Quantity) VALUES (2,'050200560002',8)"
+db2 "INSERT INTO SALEPRODUCT (SaleID, ProductSKU, Quantity) VALUES (3,'7501098605229',1)"
+db2 "INSERT INTO SALEPRODUCT (SaleID, ProductSKU, Quantity) VALUES (3,'20080403191042',1)"
 
 #PerscriptionProduct Table
-db2 "INSERT INTO PRESCRIPTIONPRODUCT VALUES (1,1,4,1)"
-db2 "INSERT INTO PRESCRIPTIONPRODUCT VALUES (2,1,8,2)"
-db2 "INSERT INTO PRESCRIPTIONPRODUCT VALUES (3,2,5,1)"
+echo "Populating Tables... PreProduct"
+db2 "INSERT INTO PRESCRIPTIONPRODUCT (PrescriptionID, ProductSKU, Quantity) VALUES (seq_perprod.nextval,1,'7501098605229',1)"
+db2 "INSERT INTO PRESCRIPTIONPRODUCT (PrescriptionID, ProductSKU, Quantity) VALUES (seq_perprod.nextval,1,'20080403191042', 2)"
+db2 "INSERT INTO PRESCRIPTIONPRODUCT (PrescriptionID, ProductSKU, Quantity) VALUES (seq_perprod.nextval,2,'037000141303', 1)"
 
 echo "[DB2] Populating Tables: DONE"

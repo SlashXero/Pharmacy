@@ -1,0 +1,74 @@
+#!/bin/ksh
+#DB2 Pharmacy - Employee Script
+
+db2 connect to db2data > /dev/null
+
+#read the employee's Name 
+echo -n "Enter your name: " ; read emp_name
+
+SELECTION=-1
+# Will print infinitely until the user enters 0 to exit the previous Script.
+while [ $SELECTION -ne 0 ]
+do
+	SELECTION=-1
+	#Print Employee Menu
+	echo "----<EMPLOYEE MENU>----"
+	echo "1 | Price of a Product"
+	echo "2 | Product Information"
+	echo "3 | Query 3"
+	echo "4 | Query 4"
+	echo "5 | Query 5"
+	echo "0 | RETURN TO MAIN MENU"
+	echo "----------------------------"
+	echo -n "Please enter the number corresponding to the selection above: " ; read SELECTION
+
+	#Select and run user queries
+	case $SELECTION in
+		1)
+			#Price of product
+			echo -n "Enter the Product SKU: " ; read SKU
+			db2 "SELECT price FROM product WHERE sku = '$SKU'"
+			;;
+		2)
+			#Price of product
+			echo -n "Enter the Product SKU: " ; read SKU
+			db2 "SELECT Name, Department, IsPrescription, Price, Stock FROM product WHERE sku = '$SKU'"
+			;;	
+		3)
+			#Record Sale
+			echo -n "Enter the Product SKU: " ; read SKU
+			echo -n "Enter the Product Quantity: " ; read prod_quan
+			db2 "IF (EXISTS (SELECT '$SKU' FROM Product where Stock > 0 AND IsPrescription = 0)) THEN
+				IF (NOT EXISTS (SELECT '$emp_name' FROM Sale))
+					THEN 
+						INSERT INTO Sale (Timestamp, Name) VALUES (CURRENT TIMESTAMP, '$emp_name') ; 
+						SELECT ID FROM NEW Sale (INSERT INTO SaleProduct (SaleID, ProductSKU, Quantity) VALUES (ID, '$SKU', $prod_quan)); 
+				ELSE 
+					SELECT ID FROM sale WHERE Name = '$emp_name' (INSERT INTO SaleProduct (SaleID, ProductSKU, Quantity) VALUES (ID, '$SKU', $prod_quan));
+				END IF;	
+			     END IF; "
+			;;
+		4)
+			#Query 3
+			
+			;; 
+		5)
+			#Query 4
+
+			;;
+		6)
+			#Query 5
+
+			;;
+		0)
+			#Return to Main Menu
+			SELECTION=0
+			;;
+		*)
+			#If user enters soemthing that is NOT part of the selection
+			echo "ERROR: Please ONLY enter the selection numbers."
+			echo " "
+			SELECTION=-1
+			;;
+	esac
+done

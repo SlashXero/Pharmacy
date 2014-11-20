@@ -2,16 +2,13 @@
 
 db2 connect to db2data > /dev/null
 
-echo "[DB2] Drop Tables..."
-db2 "DROP TABLE BALANCESHEET"
-db2 "DROP TABLE EMPLOYEE"
-db2 "DROP TABLE INCOMESTATEMENT"
-db2 "DROP TABLE ORDERSET" 
-db2 "DROP TABLE PRODUCT"
-db2 "DROP TABLE CUSTOMER"
-db2 "DROP TABLE ORDER"
-db2 "DROP TABLE PRESCRIPTION"
-sleep 1
-db2 "DROP TABLE EQUITY"
+echo "[DB2] Drop Tables:..."
+
+#drop tables
+db2 "DROP TABLE Product"
+db2 "DROP TABLE Sale"
+db2 "DROP TABLE Prescription"
+db2 "DROP TABLE SaleProduct" 
+db2 "DROP TABLE PrescriptionProduct"
 
 echo "[DB2] Drop Tables: DONE"

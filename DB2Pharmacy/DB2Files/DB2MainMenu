@@ -22,14 +22,13 @@ do
 	echo "----<USER SELECTION MENU>----"
 	echo "1 | Administrators"
 	echo "2 | Pharmacists"
-	echo "3 | Cashiers"
+	echo "3 | Employees"
 	echo "4 | Customers"
 	echo "5 | TRANSACTIONS"
 	echo "6 | SHOW TABLES"
 	echo "0 | EXIT DATABASE"
 	echo "----------------------------"
-	echo "Please enter the number corresponding to the selection above: " 
-	read SELECTION
+	echo -n "Please enter the number corresponding to the selection above: " ; read SELECTION
 
 	#Select and run next script to run that user queries
 	case $SELECTION in
@@ -43,7 +42,7 @@ do
 			;;
 		3)
 			#Start Cashier script with associated queries
-			./DB2Cashier
+			./DB2Employee
 			;;
 		4)
 			#Start Customer script with associated queries
@@ -60,9 +59,7 @@ do
 		0)
 			#Check if user wants to exit
 			echo "Are you sure you want to exit?"
-			echo "Enter 'Yes' to exit (Enter anything to return to MAIN MENU):"
-
-			read exit_message
+			echo -n "Enter 'Yes' to exit (Enter anything to return to MAIN MENU): " ; read exit_message
 			if [ "$exit_message" = "Yes" ]
 			then
 				SELECTION=0
@@ -86,6 +83,5 @@ echo "[DB2] Dropping Tables: Done"
 echo "[DB2] Removing and exiting."
 
 sleep 1
-
 #Remove all scripts from turing
 rm -f ./\DB2*

@@ -10,21 +10,20 @@ do
 	SELECTION=-1
 	#Print Pharmacist Menu
 	echo "----<PHARMACIST MENU>----"
-	echo "1 | Query 1"
+	echo "1 | Queue of pending Prescriptions"
 	echo "2 | Query 2"
 	echo "3 | Query 3"
 	echo "4 | Query 4"
 	echo "5 | Query 5"
 	echo "0 | RETURN TO MAIN MENU"
 	echo "----------------------------"
-	echo "Please enter the number corresponding to the selection above: " 
-	read SELECTION
+	echo -n "Please enter the number corresponding to the selection above: " ; read SELECTION
 
 	#Select and run user queries
 	case $SELECTION in
 		1)
-			#Query 1
-
+			#Queue of pending Prescriptions
+			db2 "SELECT * FROM Prescription WHERE isFulfilled = 0 ORDER BY DateOrdered FETCH FIRST 5 ROWS ONLY"
 			;;
 		2)
 			#Query 2

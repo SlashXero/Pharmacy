@@ -1,8 +1,8 @@
 #!/bin/ksh
 #DB2 Pharmacy - Customer Script
 
-db2 connect to db2data
-
+db2 connect to db2data > /dev/null
+ 
 SELECTION=-1
 # Will print infinitely until the user enters 0 to exit the previous Script.
 while [ $SELECTION -ne 0 ]

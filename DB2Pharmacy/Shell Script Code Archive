@@ -1,0 +1,13 @@
+----< Archive Shell code >----
+
+#read the employee's Name 
+echo "Enter your Employee ID:"
+read ID
+EMP=$(db2 -x -n "SELECT 1 FROM sale WHERE EmployeeID = $ID AND EmployeeID < 6000000") 
+EMP="${EMP#"${EMP%%[![:space:]]*}"}"
+
+if [ "$EMP" -ne 1 ]
+then
+	echo "[ERROR] Incorrect Employee ID returning to main menu..."
+	exit
+fi
