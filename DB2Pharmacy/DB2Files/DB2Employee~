@@ -15,7 +15,7 @@ do
 	echo "----<EMPLOYEE MENU>----"
 	echo "1 | Price of a Product"
 	echo "2 | Product Information"
-	echo "3 | Query 3"
+	echo "3 | Record a Sale"
 	echo "4 | Query 4"
 	echo "5 | Query 5"
 	echo "0 | RETURN TO MAIN MENU"
@@ -38,15 +38,21 @@ do
 			#Record Sale
 			echo -n "Enter the Product SKU: " ; read SKU
 			echo -n "Enter the Product Quantity: " ; read prod_quan
-			db2 "IF (EXISTS (SELECT '$SKU' FROM Product where Stock > 0 AND IsPrescription = 0)) THEN
-				IF (NOT EXISTS (SELECT '$emp_name' FROM Sale))
-					THEN 
-						INSERT INTO Sale (Timestamp, Name) VALUES (CURRENT TIMESTAMP, '$emp_name') ; 
-						SELECT ID FROM NEW Sale (INSERT INTO SaleProduct (SaleID, ProductSKU, Quantity) VALUES (ID, '$SKU', $prod_quan)); 
-				ELSE 
-					SELECT ID FROM sale WHERE Name = '$emp_name' (INSERT INTO SaleProduct (SaleID, ProductSKU, Quantity) VALUES (ID, '$SKU', $prod_quan));
-				END IF;	
-			     END IF; "
+			EMP=$(db2 -x -n "SELECT 1 FROM Product where SKU = '$SKU' AND Stock - $prod_quan >= 0 AND IsPrescription = 0")
+			EMP="${EMP#"${EMP%%[![:space:]]*}"}"
+			if [ "$EMP" -eq 1 ]
+				then
+					db2 "UPDATE Product SET Stock = Stock - $prod_quan WHERE SKU = '$SKU'" > /dev/null
+					db2 "INSERT INTO Sale (Timestamp, Name) VALUES (current timestamp, '$emp_name')"  > /dev/null
+						EMP=$(db2 -x -n "SELECT MAX(ID) FROM SALE")
+						EMP="${EMP#"${EMP%%[![:space:]]*}"}"
+					db2 "INSERT INTO SaleProduct (SaleID, ProductSKU, Quantity) VALUES ($EMP, '$SKU', $prod_quan)"  > /dev/null
+					db2 "Select * FROM SaleProduct WHERE SaleID = $EMP"
+				else
+					echo "[ERROR] Product $SKU is either out-of-stock or a Prescription product or not a Product"
+					db2 "SELECT * FROM product WHERE sku = '$SKU'"
+			fi
+			
 			;;
 		4)
 			#Query 3

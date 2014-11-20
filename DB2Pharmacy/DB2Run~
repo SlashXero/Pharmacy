@@ -1,6 +1,7 @@
 #!/bin/bash
 #Give permmissions needed to the files
 chmod -R 775 DB2Files/ > /dev/null
+chmod 775 DB2Pharmacy
 
 echo "[INITIALIZING] Zipping files..."
 # Compress all the nessary files to be sent make sure all files accounted for
@@ -11,5 +12,5 @@ echo "[INITIALIZING] Loading files into turning directory."
 scp DB2Pharmacy.zip DB2Pharmacy turing.acs.ryerson.ca:~/ > /dev/null
 echo "[INITIALIZING] Files loaded."
 echo "[INITIALIZING] Connecting to turing."
-ssh turing.acs.ryerson.ca './DB2Pharmacy' > /dev/null
-
+ssh turing.acs.ryerson.ca './DB2Pharmacy'
+ 
