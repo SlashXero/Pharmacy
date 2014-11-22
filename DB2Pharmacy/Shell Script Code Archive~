@@ -20,3 +20,15 @@ IF (NOT EXISTS (SELECT '$emp_name' FROM Sale))
 					SELECT ID FROM sale WHERE Name = '$emp_name' (INSERT INTO SaleProduct (SaleID, ProductSKU, Quantity) VALUES (ID, '$SKU', $prod_quan));
 				END IF;	
 			     END IF; "
+
+
+			EMP=$(db2 -x -n "SELECT 1 FROM Product where SKU = '$SKU' AND Stock > 0 AND IsPrescription = 0")
+			EMP="${EMP#"${EMP%%[![:space:]]*}"}"
+			if [ "$EMP" -ne 1 ]
+				then
+					EMP
+				exit
+			fi
+
+
+db2 "UPDATE Product SET Stock = Stock - $prod_quan WHERE SKU = '$SKU'" > /dev/null

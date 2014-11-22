@@ -16,8 +16,6 @@ do
 	echo "1 | Price of a Product"
 	echo "2 | Product Information"
 	echo "3 | Record a Sale"
-	echo "4 | Query 4"
-	echo "5 | Query 5"
 	echo "0 | RETURN TO MAIN MENU"
 	echo "----------------------------"
 	echo -n "Please enter the number corresponding to the selection above: " ; read SELECTION
@@ -47,24 +45,11 @@ do
 						EMP=$(db2 -x -n "SELECT MAX(ID) FROM SALE")
 						EMP="${EMP#"${EMP%%[![:space:]]*}"}"
 					db2 "INSERT INTO SaleProduct (SaleID, ProductSKU, Quantity) VALUES ($EMP, '$SKU', $prod_quan)"  > /dev/null
-					db2 "Select * FROM SaleProduct WHERE SaleID = $EMP"
+					db2 "Select * FROM SaleProduct WHERE SaleID = $EMP."
 				else
-					echo "[ERROR] Product $SKU is either out-of-stock or a Prescription product or not a Product"
+					echo "[ERROR] Product $SKU is either out-of-stock or a Prescription product or not a Product at all"
 					db2 "SELECT * FROM product WHERE sku = '$SKU'"
 			fi
-			
-			;;
-		4)
-			#Query 3
-			
-			;; 
-		5)
-			#Query 4
-
-			;;
-		6)
-			#Query 5
-
 			;;
 		0)
 			#Return to Main Menu

@@ -29,3 +29,6 @@ IF (NOT EXISTS (SELECT '$emp_name' FROM Sale))
 					EMP
 				exit
 			fi
+
+
+db2 "UPDATE Product SET Stock = Stock - $prod_quan WHERE SKU = '$SKU'" > /dev/null
