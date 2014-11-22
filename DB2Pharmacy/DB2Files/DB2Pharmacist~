@@ -10,11 +10,12 @@ do
 	SELECTION=-1
 	#Print Pharmacist Menu
 	echo "----<PHARMACIST MENU>----"
-	echo "1 | Queue of pending Prescriptions"
-	echo "2 | Query 2"
-	echo "3 | Query 3"
-	echo "4 | Query 4"
-	echo "5 | Query 5"
+	echo "1 | View all Prescriptions"
+	echo "2 | Queue of pending Prescriptions"
+	echo "3 | Order a Prescription"
+	echo "4 | Record Delivery"
+	echo "5 | Record a Pickup"
+	echo "6 | Query "
 	echo "0 | RETURN TO MAIN MENU"
 	echo "----------------------------"
 	echo -n "Please enter the number corresponding to the selection above: " ; read SELECTION
@@ -22,16 +23,24 @@ do
 	#Select and run user queries
 	case $SELECTION in
 		1)
-			#Queue of pending Prescriptions
-			db2 "SELECT * FROM Prescription WHERE isFulfilled = 0 ORDER BY DateFilled FETCH FIRST 5 ROWS ONLY"
+			#View All Prescriptions
+			db2 "SELECT * FROM Prescription"
 			;;
 		2)
-			#Query 2
-			
+			#Queue of pending Prescriptions
+			db2 "SELECT * FROM Prescription WHERE isFulfilled = 0 ORDER BY DateOrdered FETCH FIRST 5 ROWS ONLY"
 			;;
 		3)
-			#Query 3
-			
+			#Place an order for a pending prescription
+			echo -n "Enter the Prescription ID: " ; read sale_id
+			db2 "SELECT * FROM SaleProduct WHERE ID = $sale_id JOIN "
+			echo -n "Once you have ordered the products above please enter 'Yes to confirm': " ; read message
+			if [ "$message" = "Yes" ]
+				then
+				
+				else
+					SELECTION=-1
+			fi
 			;;
 		4)
 			#Query 4

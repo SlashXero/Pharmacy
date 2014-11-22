@@ -2,8 +2,8 @@
 #DB2 Pharmacy - Pharmacy
 
 #unzip all nessesary files and delete the zip file
-unzip -j -o DB2Pharmacy > /dev/null
-rm DB2Pharmacy.zip > /dev/null
+unzip -j -q -o DB2Pharmacy 2> /dev/null
+rm DB2Pharmacy.zip 2> /dev/null
 
 #Initialize Database
 echo "[INITIALIZING] Setting up DB2 Enviroment..."
