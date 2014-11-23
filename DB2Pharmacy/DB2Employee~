@@ -1,0 +1,65 @@
+#!/bin/ksh
+#DB2 Pharmacy - Employee Script
+
+db2 connect to db2data > /dev/null
+
+#read the employee's Name 
+echo -n "Enter your name: " ; read emp_name
+
+SELECTION=-1
+# Will print infinitely until the user enters 0 to exit the previous Script.
+while [ $SELECTION -ne 0 ]
+do
+	SELECTION=-1
+	#Print Employee Menu
+	echo "----<EMPLOYEE MENU>----"
+	echo "1 | Price of a Product"
+	echo "2 | Product Information"
+	echo "3 | Record a Sale"
+	echo "0 | RETURN TO MAIN MENU"
+	echo "----------------------------"
+	echo -n "Please enter the number corresponding to the selection above: " ; read SELECTION
+
+	#Select and run user queries
+	case $SELECTION in
+		1)
+			#Price of product
+			echo -n "Enter the Product SKU: " ; read SKU
+			db2 "SELECT price FROM product WHERE sku = '$SKU'"
+			;;
+		2)
+			#Price of product
+			echo -n "Enter the Product SKU: " ; read SKU
+			db2 "SELECT Name, Department, IsPrescription, Price, Stock FROM product WHERE sku = '$SKU'"
+			;;	
+		3)
+			#Record Sale
+			echo -n "Enter the Product SKU: " ; read SKU
+			echo -n "Enter the Product Quantity: " ; read prod_quan
+			EMP=$(db2 -x -n "SELECT 1 FROM Product where SKU = '$SKU' AND Stock - $prod_quan >= 0 AND IsPrescription = 0")
+			EMP="${EMP#"${EMP%%[![:space:]]*}"}"
+			if [ "$EMP" -eq 1 ]
+				then
+					db2 "UPDATE Product SET Stock = Stock - $prod_quan WHERE SKU = '$SKU'" > /dev/null
+					db2 "INSERT INTO Sale (Timestamp, Name) VALUES (current timestamp, '$emp_name')"  > /dev/null
+						EMP=$(db2 -x -n "SELECT MAX(ID) FROM SALE")
+						EMP="${EMP#"${EMP%%[![:space:]]*}"}"
+					db2 "INSERT INTO SaleProduct (SaleID, ProductSKU, Quantity) VALUES ($EMP, '$SKU', $prod_quan)"  > /dev/null
+					db2 "Select * FROM SaleProduct WHERE SaleID = $EMP."
+				else
+					echo "[ERROR] Product $SKU is either out-of-stock or a Prescription product or not a Product at all"
+					db2 "SELECT * FROM product WHERE sku = '$SKU'"
+			fi
+			;;
+		0)
+			#Return to Main Menu
+			SELECTION=0
+			;;
+		*)
+			#If user enters soemthing that is NOT part of the selection
+			echo "ERROR: Please ONLY enter the selection numbers."
+			echo " "
+			SELECTION=-1
+			;;
+	esac
+done
