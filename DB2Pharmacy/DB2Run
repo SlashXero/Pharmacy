@@ -7,8 +7,10 @@ zip -r -q PharmacyDatabase.zip DB2Files/ > /dev/null
 #Send to turing then connect to turing
 echo "[INITIALIZING] Loading files into turning directory."
 echo -n "[INITIALIZING] Please enter your SCS User name: " ; read user
+echo "[NOTE] You must enter you my.ryerson.ca password to log onto turing!"
 scp PharmacyDatabase.zip Pharmacy $user@turing.acs.ryerson.ca:~/ > /dev/null
 echo "[INITIALIZING] Files loaded."
 echo "[INITIALIZING] Connecting to turing."
+echo "[NOTE] You must enter you my.ryerson.ca password to log onto turing!"
 ssh $user@turing.acs.ryerson.ca './Pharmacy'
  
