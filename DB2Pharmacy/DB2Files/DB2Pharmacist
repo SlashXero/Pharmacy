@@ -39,7 +39,7 @@ do
 			echo -n "Once you have ordered the products above please enter 'Yes to confirm': " ; read message
 			if [ "$message" = "Yes" ]
 				then
-					db2 "UPDATE Prescription SET DateDelivered=current timestamp, isFulfilled= 1 WHERE ID = $sale_id"
+					db2 "UPDATE Prescription SET DateDelivered=current timestamp, isFulfilled= 1 WHERE ID = $sale_id" > /dev/null
 					echo "The prescription with the id $sale_id has been filled.";
 			fi
 			;;

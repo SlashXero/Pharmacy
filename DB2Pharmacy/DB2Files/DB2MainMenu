@@ -3,18 +3,6 @@
 
 db2 connect to db2data > /dev/null
 
-./DB2Drop #>> log.txt
-
-# Create Tables
-echo "[DB2] Creating Tables..."
-./DB2Create #>> log.txt
-echo "[DB2] Creating Tables: DONE"
-
-# Create Tables
-echo "[DB2] Populating Tables..."
-./DB2Populate #>> log.txt
-echo "[DB2] Polulating Tables: DONE"
-
 SELECTION=-1
 # Will print infinitely until the user enters 0 to exit the program.
 while [ $SELECTION -ne 0 ]
@@ -26,7 +14,6 @@ do
 	echo "2 | Pharmacists"
 	echo "3 | Employees"
 	echo "4 | Customers"
-	echo "5 | TRANSACTIONS"
 	echo "0 | EXIT DATABASE"
 	echo "----------------------------"
 	echo -n "Please enter the number corresponding to the selection above: " ; read SELECTION
@@ -49,10 +36,6 @@ do
 			#Start Customer script with associated queries
 			./DB2Customer
 			;;
-		5)
-			#Database Trasation Table 
-			
-			;;
 		0)
 			#Check if user wants to exit
 			echo "Are you sure you want to exit?"
@@ -72,13 +55,3 @@ do
 			;;
 	esac
 done
-
-#Drop Tables
-echo "[DB2] Dropping Tables..."
-./DB2Drop #>> log.txt
-echo "[DB2] Dropping Tables: Done"
-echo "[DB2] Removing and exiting."
-
-sleep 1
-#Remove all scripts from turing
-rm -f ./\DB2*

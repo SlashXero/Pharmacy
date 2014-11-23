@@ -13,9 +13,10 @@ do
 	SELECTION=-1
 	#Print Employee Menu
 	echo "----<EMPLOYEE MENU>----"
-	echo "1 | Price of a Product"
-	echo "2 | Product Information"
-	echo "3 | Record a Sale"
+	echo "1 | Lookup SKU"
+	echo "2 | Price of a Product"
+	echo "3 | Product Information"
+	echo "4 | Record a Sale"
 	echo "0 | RETURN TO MAIN MENU"
 	echo "----------------------------"
 	echo -n "Please enter the number corresponding to the selection above: " ; read SELECTION
@@ -23,16 +24,21 @@ do
 	#Select and run user queries
 	case $SELECTION in
 		1)
-			#Price of product
-			echo -n "Enter the Product SKU: " ; read SKU
-			db2 "SELECT price FROM product WHERE sku = '$SKU'"
+			#Sort by Name
+			echo -n "Enter the name or a partial name: " ; read SEARCH
+			db2 "SELECT Name, SKU FROM Product WHERE name LIKE '%$SEARCH%'"
 			;;
 		2)
 			#Price of product
 			echo -n "Enter the Product SKU: " ; read SKU
+			db2 "SELECT price FROM product WHERE sku = '$SKU'"
+			;;
+		3)
+			#Price of product
+			echo -n "Enter the Product SKU: " ; read SKU
 			db2 "SELECT Name, Department, IsPrescription, Price, Stock FROM product WHERE sku = '$SKU'"
 			;;	
-		3)
+		4)
 			#Record Sale
 			echo -n "Enter the Product SKU: " ; read SKU
 			echo -n "Enter the Product Quantity: " ; read prod_quan
