@@ -17,6 +17,7 @@ do
 	echo "5 | Show Products in a certain Department in a certain stock range"
 	echo "6 | Show Products sold by a certain employee"
 	echo "7 | Show Customers who have prescriptions for every prescription product"
+	echo "8 | Update stock levels of a product"
 	echo "0 | RETURN TO MAIN MENU"
 	echo "----------------------------"
 	echo -n "Please enter the number corresponding to the selection above: " ; read SELECTION
@@ -67,6 +68,13 @@ do
 				SELECT * FROM PrescriptionProduct WHERE Product.IsPrescription = 1 
 				AND Product.SKU = PrescriptionProduct.ProductSKU AND
 				PrescriptionProduct.PrescriptionID = Prescription.ID))"
+			;;
+		8)
+			#Update stock levels of a product
+				echo -n "Enter SKU of product to update: " ; read sku;
+				echo -n "Enter new amount of stock: " ; read stock;
+				db2 "UPDATE Product SET stock = $stock WHERE SKU = $sku"
+				
 			;;
 		0)
 			#Return to Main Menu

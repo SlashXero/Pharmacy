@@ -15,6 +15,8 @@ do
 	echo "3 | Show Products with the greatest price"
 	echo "4 | Show Products of certain stock values"
 	echo "5 | Show Products in a certain Department in a certain stock range"
+	echo "6 | Show Products sold by a certain employee"
+	echo "7 | Show Customers who have prescriptions for every prescription product"
 	echo "0 | RETURN TO MAIN MENU"
 	echo "----------------------------"
 	echo -n "Please enter the number corresponding to the selection above: " ; read SELECTION
@@ -46,6 +48,25 @@ do
 				echo -n "Enter the Department: " ; read dep;
 				echo -n "Enter the minimum and maximum stock to find: " ; read min; read max;
 				db2 "SELECT * FROM Product WHERE Department = '$dep' AND Stock BETWEEN $min AND $max"
+			;;
+		6)
+			#Show Products sold by a certain employee
+				echo -n "Enter the Employee name: " ; read employee;
+				db2 "SELECT * FROM Product WHERE EXISTS
+				(SELECT * FROM Sale
+				INNER JOIN SaleProduct
+				ON Sale.ID = SaleProduct.SaleID 
+				AND Sale.Name = '$employee' 
+				AND SaleProduct.ProductSKU = Product.SKU)"
+			;;
+		7)
+			#Show Customers who have prescriptions for every prescription product
+				echo -n "Customers with prescriptions for every prescription product: " ;
+				db2 "SELECT Customer FROM Prescription WHERE NOT EXISTS (
+				SELECT * FROM Product WHERE IsPrescription = 1 AND NOT EXISTS (
+				SELECT * FROM PrescriptionProduct WHERE Product.IsPrescription = 1 
+				AND Product.SKU = PrescriptionProduct.ProductSKU AND
+				PrescriptionProduct.PrescriptionID = Prescription.ID))"
 			;;
 		0)
 			#Return to Main Menu
