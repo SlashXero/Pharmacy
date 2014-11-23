@@ -1,4 +1,0 @@
-#!/bin/ksh
-
-read SKU
-echo "Test This '$SKU' THIng"
