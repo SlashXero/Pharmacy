@@ -11,10 +11,8 @@ do
 	#Print Customer Menu
 	echo "----<CUSTOMER MENU>----"
 	echo "1 | List Products"
-	echo "2 | Prescription Status"
-	echo "3 | Submit a Prescription"
-	echo "4 | Prescription History"
-	echo "5 | "
+	echo "2 | Submit a Prescription"
+	echo "3 | Prescription History"
 	echo "0 | RETURN TO MAIN MENU"
 	echo "----------------------------"
 	echo -n "Please enter the number corresponding to the selection above: " ; read SELECTION
@@ -55,12 +53,6 @@ do
 			esac
 			;;
 		2)
-			#Prescription Status
-			echo -n "Enter your Name: " ; read cus_name
-			echo -n "Enter your Doctor's Name: " ; read doc_name			
-			db2 "Select DateDelivered FROM prescription WHERE customer = '$cus_name' AND doctor = '$doc_name' AND isFulfilled = 1"
-			;;
-		3)
 			#Submit a Prescription
 			echo -n "Enter your Name: " ; read cus_name
 			echo -n "Enter your Doctor's Name: " ; read doc_name
@@ -88,28 +80,27 @@ do
 				fi		
  			done
 			prod_exists=$(db2 -x -n "SELECT 1 FROM PrescriptionProduct WHERE PrescriptionID = $id_exists")
-			prod_exists="${prod_exists#"$prod_exists%%[![:space:]]*}"}"
+			prod_exists="${prod_exists#"${prod_exists%%[![:space:]]*}"}"
 			if [ "$prod_exists" -eq 1 ]
 				then
 					db2 "SELECT Doctor, DateOrdered, DateDelivered, isFulfilled FROM prescription WHERE id = $id_exists"
 					db2 "SELECT Product.Name, PrescriptionProduct.quantity FROM Product INNER JOIN PrescriptionProduct ON Product.SKU = PrescriptionProduct.ProductSKU AND PrescriptionProduct.PrescriptionID = $id_exists"
 			fi
 			;;
-		4)
+		3)
 			#Prescription History
 			echo -n "Enter your Name: " ; read cus_name
-			$max_id=0
+			max_id=0
 			while [ 1 ]
 			do
-				EMP=$(db2 -x -n "SELECT MIN(ID) FROM Prescription WHERE customer = '$cus_name' AND ID > $max_id")
-				EMP="${EMP#"${EMP%%[![:space:]]*}"}"
-				if [ "$EMP" -ne 1 ]
+				sale_id=$(db2 -x -n "SELECT MIN(ID) FROM Prescription WHERE customer = '$cus_name' AND ID > $max_id")
+				sale_id="${sale_id#"${sale_id%%[![:space:]]*}"}"
+				if [ "$sale_id" == "-" ]
 					then
 						break
 				fi
-				sale_id=$(db2 -x -n "SELECT MIN(ID) FROM Prescription WHERE customer = '$cus_name' AND ID > $max_id")
-				sale_id="${sale_id#"${sale_id%%[![:space:]]*}"}"
-				$max_id=$sale_id
+
+				max_id=$sale_id
 				db2 "SELECT Doctor, DateOrdered, DateDelivered, isFulfilled FROM prescription WHERE id = $sale_id"
 				db2 "SELECT Product.Name, PrescriptionProduct.quantity FROM Product INNER JOIN PrescriptionProduct ON Product.SKU = PrescriptionProduct.ProductSKU AND PrescriptionProduct.PrescriptionID = $sale_id"
 			done

@@ -3,8 +3,6 @@
 
 db2 connect to db2data > /dev/null
 
-./DB2Drop #>> log.txt
-
 # Create Tables
 echo "[DB2] Creating Tables..."
 ./DB2Create #>> log.txt
