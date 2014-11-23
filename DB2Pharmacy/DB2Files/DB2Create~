@@ -76,5 +76,5 @@ db2 "CREATE TRIGGER Stockabove0
 
 echo "[DB2] Creating triggers: DONE"
 
-db2 "ASSERT price_constraint ON Product: Price >= 0"
+db2 "ALTER TABLE Product ADD CONSTRAINT price_constraint CHECK (Price >= 0)"
 

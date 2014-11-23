@@ -5,12 +5,12 @@ chmod 775 DB2Pharmacy
 
 echo "[INITIALIZING] Zipping files..."
 # Compress all the nessary files to be sent make sure all files accounted for
-zip -r DB2Pharmacy.zip DB2Files/ > /dev/null
+zip -r -q DB2Pharmacy.zip DB2Files/ > /dev/null
 
 #Send to turing then connect to turing
 echo "[INITIALIZING] Loading files into turning directory."
-scp DB2Pharmacy.zip DB2Pharmacy turing.acs.ryerson.ca:~/ > /dev/null
+scp DB2Pharmacy.zip DB2Pharmacy zharris@turing.acs.ryerson.ca:~/ > /dev/null
 echo "[INITIALIZING] Files loaded."
 echo "[INITIALIZING] Connecting to turing."
-ssh turing.acs.ryerson.ca './DB2Pharmacy'
+ssh zharris@turing.acs.ryerson.ca './DB2Pharmacy'
  

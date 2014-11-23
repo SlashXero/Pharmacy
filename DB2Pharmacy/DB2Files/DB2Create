@@ -75,7 +75,7 @@ db2 "CREATE TRIGGER Stockabove0
 	END"
 
 echo "[DB2] Creating triggers: DONE"
-
-db2 "CREATE ASSERTION price_constraint
-	CHECK(SELECT MIN(Price) FROM Product >= 0) NOT DEFERRABLE"
+echo "[DB2] Creating assertion constraints..."
+db2 "ALTER TABLE Product ADD CONSTRAINT price_constraint CHECK (Price >= 0)"
+echo "[DB2] Creating assertion constraints: DONE"
 
