@@ -1,0 +1,134 @@
+#!/bin/bash
+#DB2 Pharmacy - Pharmacy
+
+#Initialize Database
+. db2init > /dev/null
+wait
+
+SELECTION=-1
+# Will print infinitely until the user enters 0 to exit the previous Script.
+while [ $SELECTION -ne 0 ]
+do
+	echo "----<DB2 OPTIONS>----"
+	if [ ! -f DB2MainMenu ];then
+		echo "1 | Automatically Install Database"
+	else
+		echo "1 | Automatically Start Database"
+	fi
+	echo "2 | ADVANCED OPTIONS"
+	echo "0 | EXIT DATABASE"
+	echo "----------------------------"
+	echo -n "Please enter the number corresponding to the selection above: " ; read SELECTION
+
+	#Select and run user queries
+	case $SELECTION in
+		1)
+			if [ ! -f DB2MainMenu ];then
+				#unzip all nessesary files and delete the zip file
+				echo "[INITIALIZING] Unzipping Nesseary Files and removing."
+				unzip -j -q -o PharmacyDatabase.zip 2> /dev/null
+
+				#Give permmissions needed to the files
+				echo "[INITIALIZING] Giving files Permissions..."
+				chmod -R 775 ./
+
+				echo "[DB2] Dropping Previous Tables..."
+				./DB2Drop > /dev/null
+				echo "[DB2] Dropping Previous Tables: Done"
+				#Create tables
+				echo "[DB2] Creating Tables..."
+				./DB2Create > /dev/null
+				echo "[DB2] Creating Tables: DONE"
+				#Populating tables
+				echo "[DB2] Populating Tables..."
+				./DB2Populate > /dev/null
+				echo "[DB2] Polulating Tables: DONE"
+			fi
+				./DB2MainMenu
+			;;
+		2)
+			echo "----<ADVANCED OPTIONS>----"
+			echo "1 | Create Tables"
+			echo "2 | Populate Tables"
+			echo "3 | Drop Tables"
+			echo "4 | Start MainMenu"
+			echo "5 | Install Scripts"
+			echo "6 | Uninstall Scripts"
+			echo -n "Please enter the number corresponding to the selection above or any other input to return: " ; read option
+
+			#Select and run user queries
+			case $option in
+				1)
+					# Create Tables
+					echo "[DB2] Creating Tables..."
+					./DB2Create
+					echo "[DB2] Creating Tables: DONE"
+					;;
+				2)
+					# Create Tables
+					echo "[DB2] Populating Tables..."
+					./DB2Populate 
+					echo "[DB2] Polulating Tables: DONE"
+					;;
+				3)
+					echo "[DB2] Dropping Tables..."
+					./DB2Drop 
+					echo "[DB2] Dropping Tables: Done"
+					;;
+				4)
+					./DB2MainMenu
+					;;
+				6)
+					#Check if user wants to exit
+					echo "Are you sure you want to Remove all files?"
+					echo -n "Enter 'Yes' to Remove all files (Enter anything to return to DB2 OPTIONS): " ; read exit_message
+					if [ "$exit_message" = "Yes" ]
+					then
+						SELECTION=0
+					else
+						SELECTION=-1
+					fi
+					;;
+				5)
+					#unzip all nessesary files and delete the zip file
+					echo "[INITIALIZING] Unzipping Nesseary Files and removing."
+					unzip -j -q -o PharmacyDatabase.zip 2> /dev/null
+
+					#Give permmissions needed to the files
+					echo "[INITIALIZING] Giving files Permissions..."
+					chmod -R 775 ./
+					;;
+				*)
+					#If user enters soemthing that is NOT part of the selection
+					echo "ERROR: Please ONLY enter the selection numbers."
+					echo " "
+					SELECTION=-1
+					;;
+			esac
+			;;
+		0)
+			echo "Are you sure you want to exit?"
+			echo -n "Enter 'Yes' to exit (Enter anything to return to DB2 OPTIONS): " ; read exit_message
+			if [ "$exit_message" = "Yes" ]
+			then
+				echo "[DB2] Goodye =D."
+				sleep 1
+				exit
+			else
+				SELECTION=-1
+			fi
+			;;
+		*)
+			#If user enters soemthing that is NOT part of the selection
+			echo "ERROR: Please ONLY enter the selection numbers."
+			echo " "
+			SELECTION=-1
+			;;
+	esac
+done
+
+echo "[DB2] Removing and exiting."
+echo "[DB2] Goobye =D."
+sleep 1
+#Remove all scripts from turing
+rm -f ./\DB2*
